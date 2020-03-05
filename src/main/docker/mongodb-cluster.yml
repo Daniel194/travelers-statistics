@@ -3,7 +3,7 @@ services:
   statistics-mongodb:
     image: mongo:4.0.16
     ports:
-      - '27017:27017'
+      - '27085:27017'
     command: mongos --configdb statistics-mongodb-config
   statistics-mongodb-node:
     build:
