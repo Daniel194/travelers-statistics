@@ -12,8 +12,8 @@ services:
       - SPRING_DATA_MONGODB_DATABASE=statistics
       - JHIPSTER_CACHE_REDIS_SERVER=redis://statistics-redis:6385
       - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
-      - SPRING_DATA_JEST_URI=http://statistics-elasticsearch:9200
-      - SPRING_ELASTICSEARCH_REST_URIS=http://statistics-elasticsearch:9200
+      - SPRING_DATA_JEST_URI=http://elasticsearch:9200
+      - SPRING_ELASTICSEARCH_REST_URIS=http://elasticsearch:9200
       - KAFKA_BOOTSTRAPSERVERS=kafka:9092
   statistics-mongodb:
     extends:
@@ -23,10 +23,10 @@ services:
     extends:
       file: redis.yml
       service: statistics-redis
-  statistics-elasticsearch:
+  elasticsearch:
     extends:
       file: elasticsearch.yml
-      service: statistics-elasticsearch
+      service: elasticsearch
   kafka:
     extends:
       file: kafka.yml
