@@ -2,7 +2,6 @@ package org.travelers.statistics.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.FieldType;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.travelers.statistics.config.Constants;
 
 import javax.validation.constraints.NotNull;
@@ -23,9 +22,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private String id;
 
     @NotNull
-    @Pattern(regexp = Constants.LOGIN_REGEX)
     @Size(min = 1, max = 50)
-    @Indexed
+    @Pattern(regexp = Constants.LOGIN_REGEX)
     private String login;
 
     @NotNull

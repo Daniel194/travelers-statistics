@@ -11,7 +11,7 @@ Feature: Receive country statistics
             | 600 | other6 | USA     | 2020-01-03 |
             | 700 | other7 | ROM     | 2020-01-04 |
 
-        When user already exists
+        When countries already exists
 
     Scenario: Get country statistics by date
         When admin wants to see country statistics between '2020-01-01' and '2020-01-04'

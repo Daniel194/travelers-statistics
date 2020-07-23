@@ -13,7 +13,7 @@ Feature: Create new user
             | login   |
             | <login> |
         When user save the new account '<testCase>'
-        Then the save is '<expectedResult>'
+        Then the user save is '<expectedResult>'
         Examples:
             | testCase            | expectedResult | login |
             | WITH UNIQUE LOGIN   | SUCCESSFUL     | test1 |
