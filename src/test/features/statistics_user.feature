@@ -12,8 +12,8 @@ Feature: Receive user statistics
 
     Scenario: Get user statistics
         When admin wants to see user statistics between '2020-01-01' and '2020-01-03'
-        Then the response is 'SUCCESSFUL'
-        And following statistics are returned
+        Then the response is SUCCESSFUL
+        And following user statistics are returned
             | date       | count |
             | 2020-01-01 | 2     |
             | 2020-01-02 | 1     |

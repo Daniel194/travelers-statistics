@@ -15,8 +15,8 @@ Feature: Receive country statistics
 
     Scenario: Get country statistics by date
         When admin wants to see country statistics between '2020-01-01' and '2020-01-04'
-        Then the response is 'SUCCESSFUL'
-        And following statistics are returned
+        Then the response is SUCCESSFUL
+        And following country statistics are returned
             | country | count |
             | ROM     | 3     |
             | USA     | 2     |
@@ -24,8 +24,8 @@ Feature: Receive country statistics
 
     Scenario: Get country statistics by country
         When admin wants to see country statistics for 'ROM' between '2020-01-01' and '2020-01-04'
-        Then the response is 'SUCCESSFUL'
-        And following statistics are returned
+        Then the response is SUCCESSFUL
+        And following country statistics are returned
             | date       | count |
             | 2020-01-01 | 2     |
             | 2020-01-04 | 1     |
