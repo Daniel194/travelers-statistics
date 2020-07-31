@@ -9,25 +9,24 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
-import org.springframework.http.MediaType;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.testcontainers.shaded.org.apache.commons.lang.RandomStringUtils;
+import org.testcontainers.shaded.org.apache.commons.lang.math.RandomUtils;
+import org.travelers.statistics.domain.Country;
+import org.travelers.statistics.domain.User;
+import org.travelers.statistics.service.dto.CountryDTO;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Utility class for testing REST controllers.
- */
+
 public final class TestUtil {
 
     private static final ObjectMapper mapper = createObjectMapper();
-
-    /**
-     * MediaType for JSON
-     */
-    public static final MediaType APPLICATION_JSON = MediaType.APPLICATION_JSON;
 
     private static ObjectMapper createObjectMapper() {
         ObjectMapper mapper = new ObjectMapper();
@@ -37,24 +36,10 @@ public final class TestUtil {
         return mapper;
     }
 
-    /**
-     * Convert an object to JSON byte array.
-     *
-     * @param object the object to convert.
-     * @return the JSON byte array.
-     * @throws IOException
-     */
     public static byte[] convertObjectToJsonBytes(Object object) throws IOException {
         return mapper.writeValueAsBytes(object);
     }
 
-    /**
-     * Create a byte array with a specific size filled with specified data.
-     *
-     * @param size the size of the byte array.
-     * @param data the data to put in the byte array.
-     * @return the JSON byte array.
-     */
     public static byte[] createByteArray(int size, String data) {
         byte[] byteArray = new byte[size];
         for (int i = 0; i < size; i++) {
@@ -63,9 +48,10 @@ public final class TestUtil {
         return byteArray;
     }
 
-    /**
-     * A matcher that tests that the examined string represents the same instant as the reference datetime.
-     */
+    public static String convertObjectToJson(Object object) throws JsonProcessingException {
+        return mapper.writeValueAsString(object);
+    }
+
     public static class ZonedDateTimeMatcher extends TypeSafeDiagnosingMatcher<String> {
 
         private final ZonedDateTime date;
@@ -96,45 +82,61 @@ public final class TestUtil {
         }
     }
 
-    /**
-     * Creates a matcher that matches when the examined string represents the same instant as the reference datetime.
-     *
-     * @param date the reference datetime against which the examined string is checked.
-     */
     public static ZonedDateTimeMatcher sameInstant(ZonedDateTime date) {
         return new ZonedDateTimeMatcher(date);
     }
 
-    /**
-     * Verifies the equals/hashcode contract on the domain object.
-     */
     public static <T> void equalsVerifier(Class<T> clazz) throws Exception {
         T domainObject1 = clazz.getConstructor().newInstance();
         assertThat(domainObject1.toString()).isNotNull();
         assertThat(domainObject1).isEqualTo(domainObject1);
         assertThat(domainObject1.hashCode()).isEqualTo(domainObject1.hashCode());
-        // Test with an instance of another class
+
         Object testOtherObject = new Object();
         assertThat(domainObject1).isNotEqualTo(testOtherObject);
         assertThat(domainObject1).isNotEqualTo(null);
-        // Test with an instance of the same class
+
         T domainObject2 = clazz.getConstructor().newInstance();
         assertThat(domainObject1).isNotEqualTo(domainObject2);
-        // HashCodes are equals because the objects are not persisted yet
+
         assertThat(domainObject1.hashCode()).isEqualTo(domainObject2.hashCode());
     }
 
-    /**
-     * Create a {@link FormattingConversionService} which use ISO date format, instead of the localized one.
-     * @return the {@link FormattingConversionService}.
-     */
     public static FormattingConversionService createFormattingConversionService() {
-        DefaultFormattingConversionService dfcs = new DefaultFormattingConversionService ();
+        DefaultFormattingConversionService dfcs = new DefaultFormattingConversionService();
         DateTimeFormatterRegistrar registrar = new DateTimeFormatterRegistrar();
         registrar.setUseIsoFormat(true);
         registrar.registerFormatters(dfcs);
         return dfcs;
     }
 
-    private TestUtil() {}
+    public static CountryDTO getCountryDTO() {
+        CountryDTO countryDTO = new CountryDTO();
+        countryDTO.setCount(RandomUtils.nextInt());
+        countryDTO.setCountry(RandomStringUtils.randomAlphanumeric(3));
+        countryDTO.setDate(LocalDate.now());
+
+        return countryDTO;
+    }
+
+    public static Country getCountry() {
+        Country country = new Country();
+        country.setCountry(RandomStringUtils.randomAlphanumeric(3));
+        country.setLogin(RandomStringUtils.randomAlphanumeric(10));
+        country.setDate(LocalDate.now());
+
+        return country;
+    }
+
+    public static User getUser() {
+        User user = new User();
+        user.setLogin(RandomStringUtils.randomAlphanumeric(10));
+        user.setDate(LocalDate.now());
+
+        return user;
+    }
+
+
+    private TestUtil() {
+    }
 }
