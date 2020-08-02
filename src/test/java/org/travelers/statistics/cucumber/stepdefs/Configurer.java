@@ -25,7 +25,7 @@ public class Configurer implements TypeRegistryConfigurer {
             User user = new User();
             user.setId(entry.get("id"));
             user.setLogin(entry.get("login"));
-            user.setDate(LocalDate.parse(entry.get("date")));
+            user.setDate(getDate(entry.get("date")));
 
             return user;
         }));
@@ -33,7 +33,7 @@ public class Configurer implements TypeRegistryConfigurer {
         registry.defineDataTableType(new DataTableType(UserDTO.class, (TableEntryTransformer<UserDTO>) entry -> {
             UserDTO user = new UserDTO();
             user.setCount(Integer.parseInt(entry.get("count")));
-            user.setDate(LocalDate.parse(entry.get("date")));
+            user.setDate(getDate(entry.get("date")));
 
             return user;
         }));
@@ -43,7 +43,7 @@ public class Configurer implements TypeRegistryConfigurer {
             country.setId(entry.get("id"));
             country.setLogin(entry.get("login"));
             country.setCountry(entry.get("country"));
-            country.setDate(LocalDate.parse(entry.get("date")));
+            country.setDate(getDate(entry.get("date")));
 
             return country;
         }));
@@ -51,10 +51,19 @@ public class Configurer implements TypeRegistryConfigurer {
         registry.defineDataTableType(new DataTableType(CountryDTO.class, (TableEntryTransformer<CountryDTO>) entry -> {
             CountryDTO country = new CountryDTO();
             country.setCountry(entry.get("country"));
-            country.setDate(LocalDate.parse(entry.get("date")));
+            country.setDate(getDate(entry.get("date")));
             country.setCount(Integer.parseInt(entry.get("count")));
 
             return country;
         }));
     }
+
+    private LocalDate getDate(String date) {
+        if (date == null) {
+            return null;
+        }
+
+        return LocalDate.parse(date);
+    }
+
 }

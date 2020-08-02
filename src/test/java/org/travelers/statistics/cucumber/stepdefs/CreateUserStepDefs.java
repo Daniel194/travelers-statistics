@@ -12,6 +12,7 @@ import org.travelers.statistics.domain.User;
 import org.travelers.statistics.repository.UserRepository;
 import org.travelers.statistics.service.mapper.UserMapper;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,10 +50,11 @@ public class CreateUserStepDefs {
     public void save_is(String expectedResult) throws InterruptedException {
         Thread.sleep(5000);
 
-        Optional<User> result = userRepository.findByLogin(user.getLogin());
+        List<User> result = userRepository.findByLogin(user.getLogin());
 
         if ("SUCCESSFUL".equals(expectedResult)) {
-            assertThat(result).isPresent();
+            assertThat(result).isNotNull();
+            assertThat(result.size()).isGreaterThan(0);
         } else if ("FAIL".equals(expectedResult)) {
             assertThat(result).isEmpty();
         }
