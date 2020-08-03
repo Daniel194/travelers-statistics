@@ -51,7 +51,7 @@ spring:
     execution:
       thread-name-prefix: statistics-task-
       pool:
-        core-size: 1
+        core-size: 2
         max-size: 50
         queue-capacity: 10000
     scheduling:
@@ -95,7 +95,7 @@ jhipster:
       report-frequency: 60 # in seconds
   cache:
     redis:
-      server: ${redis.test.server}
+      server: redis://localhost:6385
 kafka:
   bootstrap-servers: localhost:9092
   consumer:
