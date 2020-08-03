@@ -66,13 +66,12 @@ public class StatisticsStepDefs extends StepDefs {
 
     @And("following country statistics are returned")
     public void country_statistics_are_returned(DataTable dataTable) throws Exception {
-        CountryDTO country = (CountryDTO) dataTable.asList(CountryDTO.class).get(0);
+        List<CountryDTO> country = dataTable.asList(CountryDTO.class);
 
         actions
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.count").value(country.getCount()))
-            .andExpect(jsonPath("$.country").value(country.getCountry()))
-            .andExpect(jsonPath("$.date").value(country.getDate()));
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.length()").value(country.size()));
     }
 
 }
