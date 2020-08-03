@@ -11,6 +11,8 @@ import org.travelers.statistics.service.dto.CountryDTO;
 import org.travelers.statistics.service.dto.UserDTO;
 import org.travelers.statistics.web.rest.StatisticsResource;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -55,12 +57,11 @@ public class StatisticsStepDefs extends StepDefs {
 
     @And("following user statistics are returned")
     public void user_statistics_are_returned(DataTable dataTable) throws Exception {
-        UserDTO user = (UserDTO) dataTable.asList(UserDTO.class).get(0);
+        List<UserDTO> users = dataTable.asList(UserDTO.class);
 
         actions
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.count").value(user.getCount()))
-            .andExpect(jsonPath("$.date").value(user.getDate()));
+            .andExpect(jsonPath("$.length()").value(users.size()));
     }
 
     @And("following country statistics are returned")
