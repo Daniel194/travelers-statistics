@@ -41,7 +41,7 @@ public class UserConsumerService {
     @PostConstruct
     public void setUp() {
         Map<String, Object> createNewUserProps = kafkaProperties.getConsumerProps();
-        createNewUserProps.put(ConsumerConfig.GROUP_ID_CONFIG, "create-new-user");
+        createNewUserProps.put(ConsumerConfig.GROUP_ID_CONFIG, "create-new-user-statistics");
 
         createNewUser = new KafkaConsumer<>(createNewUserProps);
         createNewUser.subscribe(Collections.singleton("create-new-user"));

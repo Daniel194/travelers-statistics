@@ -38,7 +38,7 @@ public class CountryConsumerService {
     @PostConstruct
     public void setUp() {
         Map<String, Object> createNewUserProps = kafkaProperties.getConsumerProps();
-        createNewUserProps.put(ConsumerConfig.GROUP_ID_CONFIG, "add-country");
+        createNewUserProps.put(ConsumerConfig.GROUP_ID_CONFIG, "add-country-statistics");
 
         addCountry = new KafkaConsumer<>(createNewUserProps);
         addCountry.subscribe(Collections.singleton("add-country"));
